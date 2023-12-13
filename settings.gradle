@@ -1,0 +1,5 @@
+rootProject.name = 'Yui'
+include 'server'
+include 'messenger'
+include 'client'
+

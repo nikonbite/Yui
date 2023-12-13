@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":messenger")
+    compileOnly("io.netty:netty-all:4.1.101.Final")
+}

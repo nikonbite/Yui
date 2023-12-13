@@ -1,0 +1,21 @@
+allprojects {
+    apply plugin: 'java'
+
+    group = 'net.aravix.yui'
+    version = '1.0-SNAPSHOT'
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation("org.apache.logging.log4j:log4j-core:2.22.0")
+        implementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")
+        implementation("com.google.guava:guava:32.1.3-jre")
+
+        compileOnly("org.projectlombok:lombok:1.18.30")
+        annotationProcessor("org.projectlombok:lombok:1.18.30")
+    }
+}
+
