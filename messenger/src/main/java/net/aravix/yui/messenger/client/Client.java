@@ -12,6 +12,9 @@ import net.aravix.yui.messenger.bundle.processor.impl.BossProcessor;
 import net.aravix.yui.messenger.pipeline.NetworkPipeline;
 
 import java.net.InetSocketAddress;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -45,10 +48,6 @@ public abstract class Client {
                 var address = (InetSocketAddress) channel.localAddress();
 
                 channel.writeAndFlush(new Network.Connect(name, address));
-
-                for (int i = 0; i < 10000; i++) {
-                    channel.writeAndFlush(new Gamer.Join(UUID.randomUUID().toString(), String.valueOf(i)));
-                }
 
                 if (startCallback != null)
                     startCallback.accept(this);

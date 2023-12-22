@@ -34,15 +34,9 @@ public class BundleDecoder extends ByteToMessageDecoder {
             var json = BundleUtil.readString(byteBuf);
             var bundle = Bundle.fromJson(json);
 
-            if (!byteBuf.isReadable()) {
-                log.error("Did not read full bundle for {}, {} byte(s) available",
-                        bundle.getClass(), byteBuf.readableBytes());
-                return;
-            }
-
             output.add(bundle);
         } catch (Exception e) {
-            e.printStackTrace();
+            byteBuf.skipBytes(byteBuf.readableBytes());
         }
     }
 }

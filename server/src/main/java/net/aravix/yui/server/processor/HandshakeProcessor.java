@@ -10,6 +10,7 @@ import net.aravix.yui.messenger.bundle.processor.annotations.BundleProcessor;
 import net.aravix.yui.server.client.Client;
 import net.aravix.yui.server.client.manager.ClientManager;
 
+import java.time.LocalTime;
 import java.util.Set;
 
 @Log4j2

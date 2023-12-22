@@ -26,5 +26,4 @@ public interface Bundle {
     static Bundle fromJson(String json) {
         return MAPPER.readValue(json, (Class<? extends Bundle>) Class.forName(ReflectionUtil.extractClassName(json)));
     }
-
 }
