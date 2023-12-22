@@ -1,10 +1,9 @@
-package net.aravix.yui.messenger.client;
+package net.aravix.yui.messenger.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import lombok.NonNull;
-import net.aravix.yui.messenger.bundle.manager.BundleManager;
 import net.aravix.yui.messenger.pipeline.NetworkPipeline;
 
 public abstract class Server {

@@ -4,7 +4,9 @@ import com.google.common.eventbus.EventBus;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import net.aravix.yui.messenger.bundle.Bundle;
-import net.aravix.yui.messenger.client.Server;
+import net.aravix.yui.messenger.bundle.processor.impl.BossProcessor;
+import net.aravix.yui.messenger.server.Server;
+import net.aravix.yui.server.processor.HandshakeProcessor;
 
 @Getter
 @Log4j2
@@ -30,7 +32,7 @@ public class YuiServer extends Server {
 
     @Override
     protected void registerProcessors() {
-
+        BossProcessor.registerProcessor(new HandshakeProcessor());
     }
 
     @Override
@@ -42,5 +44,9 @@ public class YuiServer extends Server {
 
     public void broadcastPacket(Bundle... packets) {
         //ClientManager.getConnectedClients().forEach(client -> client.sendPacket(packets));
+    }
+
+    {
+        INSTANCE = this;
     }
 }
