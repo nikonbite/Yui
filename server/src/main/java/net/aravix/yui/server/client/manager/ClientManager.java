@@ -4,10 +4,13 @@ import com.google.common.collect.Sets;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import net.aravix.yui.messenger.util.ConnectionType;
 import net.aravix.yui.server.YuiServer;
 import net.aravix.yui.server.client.Client;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -22,23 +25,20 @@ public class ClientManager {
     public void onConnect(Client client) {
         connectedClients.add(client);
 
-//        if (client.type().equals(ConnectionType.PROXY)) {
-//            SchedulerUtil.runAsyncTaskLater(() -> {
-//                var registeredCommandsCopy = new HashSet<>(TowerCommandManager.REGISTERED_COMMANDS);
-//
-//                registeredCommandsCopy.forEach(command -> TowerServer.INSTANCE.broadcastPacket(
-//                        ConnectionType.PROXY,
-//                        new TowerCommandBundle(
-//                                command.name(),
-//                                command.group(),
-//                                command.authorized(),
-//                                Arrays.stream(command.aliases()).toList()
-//                        )
-//                ));
-//            }, 1, TimeUnit.SECONDS);
-//        }
+/*        if (client.type().equals(ConnectionType.PROXY)) {
+            SchedulerUtil.runAsyncTaskLater(() -> {
+                var registeredCommandsCopy = new HashSet<>(TowerCommandManager.REGISTERED_COMMANDS);
 
-        // new ClientConnectedEvent(client).call();
+                registeredCommandsCopy.forEach(command -> TowerServer.INSTANCE.broadcastPacket(
+                        ConnectionType.PROXY,
+                        new TowerCommandBundle(
+                                command.name(),
+                                command.group(),
+                                command.authorized()
+                        )
+                ));
+            }, 1, TimeUnit.SECONDS);
+        }*/
 
         log.info("Клиент {} зарегистрирован [IP: {}]", client.name(), client.ctx().channel().remoteAddress());
     }

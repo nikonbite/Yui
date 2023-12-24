@@ -10,15 +10,14 @@ import net.aravix.yui.messenger.bundle.impl.Gamer;
 import net.aravix.yui.messenger.bundle.impl.Network;
 import net.aravix.yui.messenger.bundle.processor.impl.BossProcessor;
 import net.aravix.yui.messenger.pipeline.NetworkPipeline;
+import net.aravix.yui.messenger.util.ConnectionType;
 
 import java.net.InetSocketAddress;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public abstract class Client {
     private final String name;
     private Bootstrap clientBootstrap;
@@ -47,7 +46,7 @@ public abstract class Client {
             } else {
                 var address = (InetSocketAddress) channel.localAddress();
 
-                channel.writeAndFlush(new Network.Connect(name, address));
+                channel.writeAndFlush(new Network.Connect(name, ConnectionType.PROXY, address));
 
                 if (startCallback != null)
                     startCallback.accept(this);

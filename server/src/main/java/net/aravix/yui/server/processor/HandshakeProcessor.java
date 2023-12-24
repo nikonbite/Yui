@@ -10,7 +10,6 @@ import net.aravix.yui.messenger.bundle.processor.annotations.BundleProcessor;
 import net.aravix.yui.server.client.Client;
 import net.aravix.yui.server.client.manager.ClientManager;
 
-import java.time.LocalTime;
 import java.util.Set;
 
 @Log4j2
@@ -26,24 +25,21 @@ public class HandshakeProcessor implements Processor {
     public void onChannelInactive(ChannelHandlerContext channelHandlerContext) {
         channelsWaitingApproval.removeIf(channelHandlerContext1 -> channelHandlerContext1.equals(channelHandlerContext));
 
-        ClientManager.getConnectedClients().stream()
-                .filter(client -> client.ctx().equals(channelHandlerContext))
+        ClientManager.getConnectedClients().stream().filter(client -> client.ctx().equals(channelHandlerContext))
                 .findFirst().ifPresent(ClientManager::onDisconnect);
     }
 
     @BundleProcessor
     public void handle(Network.Connect packet) {
-        var context = channelsWaitingApproval.stream()
-                .filter(channelHandlerContext -> channelHandlerContext.channel()
-                        .remoteAddress().equals(packet.address()))
-                .findFirst();
+        channelsWaitingApproval.stream().filter(channelHandlerContext -> channelHandlerContext.channel().remoteAddress()
+                .equals(packet.address())).findFirst().ifPresent(channelHandlerContext -> {
+            var client = new Client(packet.name(), packet.type(), channelHandlerContext);
 
-        context.ifPresent(channelHandlerContext -> {
-            var client = new Client(packet.name(), /*packet.type(),*/ channelHandlerContext);
-
-            if (ClientManager.getConnectedClients().contains(client)) return;
+            if (ClientManager.getConnectedClients().contains(client))
+                return;
 
             ClientManager.onConnect(client);
+            new Network.ConnectEvent(packet);
         });
     }
 
